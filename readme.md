@@ -23,7 +23,7 @@ git bash 用于执行命令
 nasm -f bin boot.asm -o boot.bin
 
 # boot第二阶段，引导程序，位于软盘其他扇区
-nasm -f bin boot2.asm -o WT.SYS
+nasm -f bin stage2.asm -o WT.SYS
 
 #生成空白软盘,dd是git bash内存复制命令
 dd if=/dev/zero of=floppy.img bs=512 count=2880
