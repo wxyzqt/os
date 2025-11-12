@@ -1,5 +1,7 @@
 # boot.asm 解释
 
+[主要参考](https://www.brokenthorn.com/Resources/OSDev1.html)
+
 ## 初始化阶段
 
 ‌bits 16‌：声明使用 16 位实模式

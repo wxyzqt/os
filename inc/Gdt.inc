@@ -18,10 +18,10 @@ bits	16
 InstallGDT:
  
 	cli				; clear interrupts
-	pusha				; save registers
-	lgdt 	[toc]			; load GDT into GDTR
+	pusha			; save registers
+	lgdt 	[toc]	; load GDT into GDTR
 	sti				; enable interrupts
-	popa				; restore registers
+	popa			; restore registers
 	ret				; All done!
  
 ;*******************************************
@@ -52,6 +52,9 @@ end_of_gdt:
 toc: 
 	dw end_of_gdt - gdt_data - 1 	; limit (Size of GDT)
 	dd gdt_data 			; base of GDT
- 
+
+%define NULL_DESC 0
+%define CODE_DESC 0x8
+%define DATA_DESC 0x10
  
 %endif ;__GDT_INC_67343546FDCC56AAB872_INCLUDED__

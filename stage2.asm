@@ -47,13 +47,6 @@ main:
 	sti				; enable interrupts
  
 	;-------------------------------;
-	;   Print loading message	;
-	;-------------------------------;
- 
-	mov	si, LoadingMsg
-	call	Puts16
- 
-	;-------------------------------;
 	;   Install our GDT		;
 	;-------------------------------;
  
@@ -66,15 +59,24 @@ main:
 	call	EnableA20_KKbrd_Out
 
 	;-------------------------------;
+	;   Print loading message	;
+	;-------------------------------;
+
+	mov	si, LoadingMsg
+	call	Puts16
+
+	;-------------------------------;
 	;   Go into pmode		;
 	;-------------------------------;
  
+EnterStage3:
+
 	cli				; clear interrupts
 	mov	eax, cr0		; set bit 0 in cr0--enter pmode
 	or	eax, 1
 	mov	cr0, eax
  
-	jmp	08h:Stage3		; far jump to fix CS. Remember that the code selector is 0x8!
+	jmp	CODE_DESC:Stage3		; far jump to fix CS
  
 	; Note: Do NOT re-enable interrupts! Doing so will triple fault!
 	; We will fix this in Stage 3.
@@ -91,17 +93,28 @@ Stage3:
 	;   Set registers		;
 	;-------------------------------;
  
-	mov		ax, 0x10		; set data segments to data selector (0x10)
+	mov		ax, DATA_DESC		; set data segments to data selector (0x10)
 	mov		ds, ax
 	mov		ss, ax
 	mov		es, ax
 	mov		esp, 90000h		; stack begins from 90000h
- 
-;*******************************************************
-;	Stop execution
-;*******************************************************
- 
+	
+	;---------------------------------------;
+	;   Clear screen and print success	;
+	;---------------------------------------;
+
+	call		ClrScr32
+	mov		ebx, msg
+	call		Puts32
+
+	;---------------------------------------;
+	;   Stop execution			;
+	;---------------------------------------;
+
 STOP:
  
 	cli
 	hlt
+
+msg db  0x0A, 0x0A, 0x0A, "               <[ WTOS Learn Series ]>"
+    db  0x0A, 0x0A,             "           Basic 32 bit graphics demo in Assembly Language", 0
