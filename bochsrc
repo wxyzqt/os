@@ -11,7 +11,7 @@ romimage: file=D:/software/Bochs-3.0/BIOS-bochs-latest
 vgaromimage: file=D:/software/Bochs-3.0/VGABIOS-lgpl-latest.bin
 
 # 磁盘映像配置
-floppya: 1_44=D:/asm/os/floppy.img, status=inserted
+floppya: 1_44=D:/asm/os/build/os-image.bin, status=inserted
 
 # 启动设备设置
 boot: a

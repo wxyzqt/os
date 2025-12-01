@@ -1,40 +1,57 @@
-# wt os
+# 操作系统原理
 
-windows 下学习操作系统原理
+## 为什么学习操作系统
 
-不需要太复杂的虚拟机，不需要专业的汇编或 c 的 IDE，不需要准备硬件设备。
+操作系统是管理和分配硬件资源的软件，也是硬件与软件的中间层。对硬件来说，操作系统抽象了硬件功能，对软件来说，是运行常规软件的基础环境。
 
-## 环境
+对于程序员来说，了解操作系统原理是构建自身软件能力最好的一块基石
 
-IDE，直接使用 vscode
+软件核心能力不是通过阅读博客和文章就能获得的，只有真正学了操作系统，才能跨过程序员和码农二者之间的思维界限。
 
-nasm 汇编器，下载即可
+## 为什么有这个仓库
 
-bochs 模拟器，官网直接下载最新稳定版本
+操作系统本身前置知识很多，环境设置较常规开发有所区别，相关学习仓库都是英文文档，这些都是学习障碍。
 
-mtools 主要使用 mcopy，复制文件到软盘
+本仓库目的如下：
 
-git bash 用于执行命令
+- 中文文档，并配套中文注释
+- 选择最简环境和最少前置知识要求
+- 随仓库提供环境安装包，直接 windows 安装可用
 
-## 命令行
+## 学习到什么程度
 
-```sh
-# boot第一阶段，主引导程序，限制512字节
-nasm -f bin boot.asm -o boot.bin
+### 有志于系统开发
 
-# boot第二阶段，引导程序，位于软盘其他扇区
-nasm -f bin stage2.asm -o WT.SYS
+对于有志于系统开发的朋友，可以多参考[wiki.osdev.org](https://wiki.osdev.org/Expanded_Main_Page)，其知识专业而丰富。
 
-#生成空白软盘,dd是git bash内存复制命令
-dd if=/dev/zero of=floppy.img bs=512 count=2880
+但这个网站并不直接提供教程的，所以本仓库存在一定的起步价值。
 
-# 主引导程序内存复制到扇区0
-dd if=boot.bin of=floppy.img bs=512 count=1 seek=0 conv=notrunc
+#### 难度预期
 
-# 将第二阶段引导程序复制到软盘，mcopy复制文件时会同时在FAT12的根目录区创建目录项
-# mcopy 是 mtools 工具包的命令
-mcopy -i floppy.img WT.SYS ::
+一般 os 开发推荐基础要求为编程 10 年以上经验，其中至少 3 年低级编程(C/C++/ASM)经验
 
-#bochs启动模拟
-bochs -f bochsrc
-```
+Linus Torvalds 在开发 Linux 前已有约 6 年编程经验
+
+他 10 岁开始用 Commodore VIC-20 学习 Basic 编程，大学期间通过计算机课程系统学习 UNIX 和 C 语言，并持续参与编程实践
+
+发布 Linux 第一个版本（v0.01）前，实际编码时间为 10 天 ‌
+
+在此之前花费了约 4 个月时间构思框架，整个准备期约 6 个月
+
+### 了解操作系统原理
+
+对于想夯实基础的朋友，学习这个仓库并在过程中认真了解介绍的每一块知识点就足够了。
+
+我本人也是出于学习的目的，对于操作系统知识的要求止步在此阶段。
+
+## 主要参考
+
+[os-tutorial](https://github.com/cfenollosa/os-tutorial.git)是本仓库选用的代码原版，因为其理解难度最低
+
+[OSDevIndex](https://www.brokenthorn.com/Resources/OSDevIndex.html)是 OS 开发的早期细节知识，其 x86 硬件相关介绍详细
+
+[wiki.osdev.org](https://wiki.osdev.org/Expanded_Main_Page)是 OS 开发权威网站，其内容丰富且专业
+
+## 最后注意点
+
+此仓库是本人知识体系的一部分，所以配套文档位于[wxyzqt/docs](https://github.com/wxyzqt/docs)仓库的`操作系统`一栏,阅读仓库的 readme 即可上手。
