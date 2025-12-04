@@ -1,0 +1,17 @@
+
+###############################################################
+# bochsrc.rc 配置文件
+###############################################################
+
+# 设置内存大小
+megs: 32
+
+# BIOS 和 VGA BIOS 文件路径
+romimage: file=D:/software/Bochs-3.0/BIOS-bochs-latest
+vgaromimage: file=D:/software/Bochs-3.0/VGABIOS-lgpl-latest.bin
+
+# 磁盘映像配置
+floppya: 1_44=D:/repo/os/example/boot2/floppy.img, status=inserted
+
+# 启动设备设置
+boot: a
